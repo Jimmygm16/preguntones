@@ -4,43 +4,95 @@ import { getAnswersAarray } from '../helpers.js'
 
 const props = defineProps({
   question: {
-    type: String,
-    required: true
-  },
-  type: {
-    type: String,
-    required: true
-  },
-  answers: {
-    type: Array,
-    required: true
-  },
-  correctAnswer: {
-    type: String,
+    type: Object,
     required: true
   }
 })
+console.log(props.question)
+
 // Full set of answers
 const questionAnswers = ref([])
-questionAnswers.value = getAnswersAarray(props.answers, props.correctAnswer)
+const answered = ref(false)
 
-const isMultipleChoice = props.type === 'multiple'
+questionAnswers.value = getAnswersAarray(
+  props.question.incorrect_answers,
+  props.question.correct_answer
+)
+
+const isMultipleChoice = props.question.type === 'multiple'
+
+const onQuestionAnswered = () => {
+  answered.value = true
+}
+
+const isCorrectAnswer = (index) => {
+  return index === questionAnswers.value.indexOf(props.question.correct_answer)
+}
 </script>
 
 <template>
   <section class="question-card" v-if="isMultipleChoice">
     <h2 class="question-title">
-      {{ props.question }}
+      {{ props.question.question }}
     </h2>
-    <ul class="questions-answers">
-      <li class="answer" v-for="(answer, index) in questionAnswers" v-bind:key="index">
+    <ul class="questions-answers" v-if="!answered">
+      <li
+        class="answer"
+        v-for="(answer, index) in questionAnswers"
+        v-bind:key="index"
+        @click="onQuestionAnswered"
+      >
+        <span>
+          {{ answer }}
+        </span>
+      </li>
+    </ul>
+    <ul class="questions-answers" v-else>
+      <li
+        class="answered"
+        v-for="(answer, index) in questionAnswers"
+        v-bind:key="index"
+        :style="{
+          backgroundColor: isCorrectAnswer(index) ? 'rgba(0,255,0,0.3)' : 'rgba(255,0,0,0.3)'
+        }"
+      >
         <span>
           {{ answer }}
         </span>
       </li>
     </ul>
   </section>
-  <section class="question-card" v-else></section>
+  <section class="question-card" v-else>
+    <h2 class="question-title">
+      {{ props.question.question }}
+    </h2>
+    <div class="boolean-questions" v-if="!answered">
+      <div
+        class="bool-answer"
+        v-for="(answer, index) in questionAnswers"
+        v-bind:key="index"
+        @click="onQuestionAnswered"
+      >
+        <span>
+          {{ answer }}
+        </span>
+      </div>
+    </div>
+    <div class="boolean-questions" v-else>
+      <div
+        class="bool-answered"
+        v-for="(answer, index) in questionAnswers"
+        v-bind:key="index"
+        :style="{
+          backgroundColor: isCorrectAnswer(index) ? 'rgba(0,255,0,0.3)' : 'rgba(255,0,0,0.3)'
+        }"
+      >
+        <span>
+          {{ answer }}
+        </span>
+      </div>
+    </div>
+  </section>
 </template>
 
 <style scoped>
@@ -91,6 +143,50 @@ const isMultipleChoice = props.type === 'multiple'
         background-color: #f0f0f0;
       }
     }
+
+    .answered {
+      border-radius: 5px;
+      padding: 0.5rem 0.8rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: background-color 0.1s;
+    }
   }
+}
+
+.boolean-questions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.bool-answer {
+  background-color: #fff;
+  border-radius: 10px;
+  width: 50%;
+  padding: 1rem 0.8rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.1s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}
+
+.bool-answered {
+  border-radius: 10px;
+  width: 50%;
+  padding: 1rem 0.8rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.1s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

@@ -12,7 +12,9 @@ import { RouterLink } from 'vue-router'
       <RouterLink to="/players">
         <div class="card">Local Coop</div>
       </RouterLink>
-      <div class="card">Configuration</div>
+      <RouterLink to="/settings">
+        <div class="card">Configuration</div>
+      </RouterLink>
     </div>
   </main>
 </template>

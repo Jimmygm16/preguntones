@@ -13,12 +13,6 @@ const formatQuestionType = (questionType) => {
     return questionType.name
   }
 }
-
-const spinWheel = () => {
-  const wheel = document.querySelector('.wheel')
-  const spin = Math.floor(Math.random() * 360 + 1440)
-  wheel.style.setProperty('--rotateWheel', `${spin}deg`)
-}
 </script>
 
 <template>
@@ -87,6 +81,16 @@ const spinWheel = () => {
     0 0 0 6px #333,
     0 0 0 15px #fff,
     0 0 0 1rem #111;
+  animation: rotateWheel 5s linear;
+}
+
+@keyframes rotateWheel {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .container .wheel .option {
