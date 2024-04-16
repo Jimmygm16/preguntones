@@ -1,4 +1,6 @@
 <script setup>
+import { ref } from 'vue'
+
 const props = defineProps({
   questionTypes: {
     type: Array,
@@ -14,11 +16,17 @@ const formatQuestionType = (questionType) => {
   }
 }
 
-const spinWheel = () => {
-  const wheel = document.querySelector('.wheel')
-  const spin = Math.floor(Math.random() * 360 + 1440)
-  wheel.style.setProperty('--rotateWheel', `${spin}deg`)
+const isSpinning = ref(false)
+
+function spinWheel() {
+  isSpinning.value = true
+
+  setTimeout(() => {
+    isSpinning.value = false
+  }, 2000)
 }
+
+spinWheel()
 </script>
 
 <template>
