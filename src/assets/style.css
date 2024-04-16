@@ -5,3 +5,11 @@
   --orange: #f27405;
   --red: #f21313;
 }
+
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100dvw;
+  height: 100dvh;
+}
