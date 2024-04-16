@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <h1>sadsd</h1>
+  <h1>sadsds</h1>
 </template>
 
 <style scoped></style>
