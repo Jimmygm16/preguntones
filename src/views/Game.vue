@@ -1,22 +1,23 @@
 <script setup>
+import { ref } from 'vue'
+//components
 import GameHeader from '@/components/GameHeader.vue'
 import GameQuestion from '@/components/GameQuestion.vue'
 import Result from '@/components/Result.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
+//helpers
+import { questions } from '@/consts.js'
+import { getRandomCategories } from '@/helpers.js'
 
-import { fetchQuestions } from '@/API/questions'
-import { ref } from 'vue'
-
-const questions = ref([])
+const apiQuestions = ref(questions)
 const question = ref({})
 const loading = ref(true)
 
-const takeQuestions = async () => {
-  await fetchQuestions(questions, loading)
-  question.value = questions.value[0]
-}
+console.log(getRandomCategories(apiQuestions))
 
-takeQuestions()
+setTimeout(() => {
+  loading.value = false
+}, 1000)
 </script>
 
 <template>
@@ -24,8 +25,7 @@ takeQuestions()
   <section v-else>
     <GameHeader />
     <main class="page-content">
-      <Result />
-      <!-- <GameQuestion :question="question" /> -->
+      <GameQuestion :question="question" />
     </main>
   </section>
 </template>
