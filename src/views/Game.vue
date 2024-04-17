@@ -15,6 +15,7 @@ import { questions } from '@/consts.js'
 import { getRandomCategories, getRandomQuestion, handlePointsOnAnswer } from '@/helpers.js'
 
 const router = useRouter()
+const playersInfo = ref(JSON.parse(localStorage.getItem('characters')))
 const apiQuestions = ref(questions)
 const selectedCategory = ref('')
 const question = ref({})
@@ -62,18 +63,20 @@ const CountDownIsOver = () => {
 }
 
 const handleAnswer = (answer) => {
-  console.log(answer)
-  const players = JSON.parse(localStorage.getItem('characters'))
   if (answer) {
-    players[answerRotation.value].score += handlePointsOnAnswer(answer, question.value.difficulty)
-    console.log(handlePointsOnAnswer(answer, question.value.difficulty))
-    localStorage.setItem('characters', JSON.stringify(players))
+    playersInfo.value[answerRotation.value].score += handlePointsOnAnswer(
+      answer,
+      question.value.difficulty
+    )
+    localStorage.setItem('characters', JSON.stringify(playersInfo.value))
   } else {
-    players[answerRotation.value].score += handlePointsOnAnswer(answer, question.value.difficulty)
-    console.log(handlePointsOnAnswer(answer, question.value.difficulty))
-    players[answerRotation.value].lives -= 1
-    localStorage.setItem('characters', JSON.stringify(players))
-    if (players[answerRotation.value].lives === 0) {
+    playersInfo.value[answerRotation.value].score += handlePointsOnAnswer(
+      answer,
+      question.value.difficulty
+    )
+    playersInfo.value[answerRotation.value].lives -= 1
+    localStorage.setItem('characters', JSON.stringify(playersInfo.value))
+    if (playersInfo.value[answerRotation.value].lives === 0) {
       endGame()
       return
     }
@@ -84,25 +87,6 @@ const handleAnswer = (answer) => {
     answerRotation.value = answerRotation.value === 1 ? 0 : 1
     handleStages(1)
   }
-
-  // console.log(rounds.value, answerRotation.value, answer)
-  // const players = JSON.parse(localStorage.getItem('characters'))
-  // if (!answer && players[answerRotation.value].lives > 1) {
-  //   players[answerRotation.value].lives -= 1
-  // } else if (!answer && players[answerRotation.value].lives === 1) {
-  //   players[answerRotation.value].lives -= 1
-  //   endGame()
-  //   return
-  // }
-  // players[answerRotation.value].score += handlePointsOnAnswer(answer, question.value.difficulty)
-  // localStorage.setItem('characters', JSON.stringify(players))
-
-  // if (answerRotation.value === 1) {
-  //   handleStages(2)
-  // } else {
-  //   answerRotation.value = answerRotation.value === 1 ? 0 : 1
-  //   handleStages(1)
-  // }
 }
 
 setTimeout(() => {
@@ -113,7 +97,7 @@ setTimeout(() => {
 <template>
   <LoadingSpinner v-if="loading" />
   <section v-else>
-    <GameHeader />
+    <GameHeader :info="playersInfo" />
     <main class="page-content">
       <div class="stage-1" v-if="stages[0]">
         <SpinWheel
@@ -122,7 +106,7 @@ setTimeout(() => {
         />
       </div>
       <div class="question-content" v-if="stages[1]">
-        <!-- <Timer :time="10" @emitCountDownIsOver="CountDownIsOver" /> -->
+        <Timer :time="10" @emitCountDownIsOver="CountDownIsOver" />
         <GameQuestion :question="question" @emitHandleAnswer="handleAnswer" />
       </div>
     </main>

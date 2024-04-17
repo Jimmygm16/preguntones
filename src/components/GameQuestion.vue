@@ -22,22 +22,28 @@ questionAnswers.value = getAnswersAarray(
 
 const isMultipleChoice = props.question.type === 'multiple'
 
-const onQuestionAnswered = () => {
+const onQuestionAnswered = (index) => {
   answered.value = true
-}
 
-const isCorrectAnswer = (index) => {
-  const isCorrectAnswer = index === questionAnswers.value.indexOf(props.question.correct_answer)
-  answered.value = true
   setTimeout(() => {
-    if (isCorrectAnswer) {
+    if (isCorrectAnswer(index)) {
       emit('emitHandleAnswer', true)
     } else {
       emit('emitHandleAnswer', false)
     }
   }, 1500)
+}
+
+const isCorrectAnswer = (index) => {
+  const isCorrectAnswer = index === questionAnswers.value.indexOf(props.question.correct_answer)
+  console.log(isCorrectAnswer, props.question.correct_answer, questionAnswers.value[index])
+  answered.value = true
   return isCorrectAnswer
 }
+
+setTimeout(() => {
+  isCorrectAnswer(-1)
+}, 10000)
 </script>
 
 <template>
@@ -50,7 +56,7 @@ const isCorrectAnswer = (index) => {
         class="answer"
         v-for="(answer, index) in questionAnswers"
         v-bind:key="index"
-        @click="onQuestionAnswered"
+        @click="onQuestionAnswered(index)"
       >
         <span>
           {{ answer }}
@@ -81,7 +87,7 @@ const isCorrectAnswer = (index) => {
         class="bool-answer"
         v-for="(answer, index) in questionAnswers"
         v-bind:key="index"
-        @click="onQuestionAnswered"
+        @click="onQuestionAnswered(index)"
       >
         <span>
           {{ answer }}
