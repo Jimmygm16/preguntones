@@ -45,7 +45,7 @@ const handleStages = (stage) => {
     setTimeout(() => {
       question.value = getRandomQuestion(apiQuestions.value, selectedCategory.value)
       stages.value[stage] = true
-      console.log(stage)
+      console.log(apiQuestions.value.length)
     }, 2000)
   } else if (stage === 2) {
     answerRotation.value = answerRotation.value === 1 ? 0 : 1
@@ -109,6 +109,16 @@ setTimeout(() => {
         <Timer :time="10" @emitCountDownIsOver="CountDownIsOver" />
         <GameQuestion :question="question" @emitHandleAnswer="handleAnswer" />
       </div>
+      <div v-if="!stages[0] && !stages[1] && !stages[2]">
+        <div class="loading-card" v-if="answerRotation === 0">
+          <img :src="playersInfo[0].url_img1" alt="Player one avatar" />
+          <h2>{{ playersInfo[0].character1 }} turn's!</h2>
+        </div>
+        <div class="loading-card" v-else>
+          <img :src="playersInfo[1].url_img2" alt="Player two avatar" />
+          <h2>{{ playersInfo[1].character2 }} turn's!</h2>
+        </div>
+      </div>
     </main>
   </section>
 </template>
@@ -133,5 +143,13 @@ setTimeout(() => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.loading-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 </style>

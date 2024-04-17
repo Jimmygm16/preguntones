@@ -13,7 +13,6 @@ function countdown() {
   if (timer.value > 0) {
     timer.value -= 1
   } else {
-    console.log('clock is over')
     emit('emitCountDownIsOver')
     clearInterval(intervalId)
   }
