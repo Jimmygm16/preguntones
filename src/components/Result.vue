@@ -1,8 +1,21 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 const info = ref(JSON.parse(localStorage.getItem('characters')))
+const result = ref('')
 console.log(info.value[0].url_img1)
+
+const winner = () => {
+  if (info.value[0].score > info.value[1].score) {
+    result.value = info.value[0].character1 + ' wins'
+  } else if (info.value[0].score == info.value[1].score) {
+    result.value = 'Draw'
+  } else {
+    result.value = info.value[1].character2 + ' wins'
+  }
+  console.log(result.value)
+}
+winner()
 </script>
 
 <template>
@@ -16,9 +29,7 @@ console.log(info.value[0].url_img1)
       <span class="text"> {{ info[1].score + ' ptos' }} </span>
     </div>
     <div class="result">
-      <span class="text">{{
-        info[0].score > info[1].score ? info[0].character1 + ' wins' : info[1].character2 + ' wins'
-      }}</span>
+      <span class="text">{{ result }}</span>
     </div>
   </div>
 </template>
