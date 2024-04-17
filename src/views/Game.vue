@@ -62,12 +62,15 @@ const CountDownIsOver = () => {
 }
 
 const handleAnswer = (answer) => {
+  console.log(answer)
   const players = JSON.parse(localStorage.getItem('characters'))
   if (answer) {
     players[answerRotation.value].score += handlePointsOnAnswer(answer, question.value.difficulty)
+    console.log(handlePointsOnAnswer(answer, question.value.difficulty))
     localStorage.setItem('characters', JSON.stringify(players))
   } else {
     players[answerRotation.value].score += handlePointsOnAnswer(answer, question.value.difficulty)
+    console.log(handlePointsOnAnswer(answer, question.value.difficulty))
     players[answerRotation.value].lives -= 1
     localStorage.setItem('characters', JSON.stringify(players))
     if (players[answerRotation.value].lives === 0) {
