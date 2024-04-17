@@ -35,6 +35,8 @@ function countdown() {
   background-color: beige;
   width: fit-content;
   padding: 1rem 3rem;
+  position: relative;
+  top: -4rem;
 }
 
 .time {

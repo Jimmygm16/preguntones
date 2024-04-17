@@ -1,18 +1,30 @@
 <script setup>
+import { ref } from 'vue'
+
 const props = defineProps({
   questionTypes: {
     type: Array,
     required: true
+  },
+  updateSelectedCategory: {
+    type: Function,
+    required: true
   }
 })
 
+const selectedCategory = ref(props.questionTypes[1])
+
 const formatQuestionType = (questionType) => {
-  if (questionType.name.includes(':')) {
-    return questionType.name.split(':')[1]
+  if (questionType.includes(':')) {
+    return questionType.split(':')[1]
   } else {
-    return questionType.name
+    return questionType
   }
 }
+
+setTimeout(() => {
+  props.updateSelectedCategory(selectedCategory.value, 1)
+}, 5000)
 </script>
 
 <template>
@@ -37,8 +49,9 @@ const formatQuestionType = (questionType) => {
 <style scoped>
 .container {
   position: relative;
-  width: 45dvw;
-  height: 45dvw;
+  width: 40dvw;
+  height: 40dvw;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,11 +74,11 @@ const formatQuestionType = (questionType) => {
 .container .wheel-center::before {
   content: '';
   position: absolute;
-  top: -2dvw;
+  right: -2.4dvw;
   width: 2.5dvw;
   height: 2dvw;
   background-color: #333;
-  clip-path: polygon(50% 0%, 15% 100%, 85% 100%);
+  clip-path: polygon(100% 50%, 0% 100%, 0 0);
   z-index: 9;
 }
 
@@ -99,8 +112,8 @@ const formatQuestionType = (questionType) => {
   height: 50%;
   background: var(--color);
   transform-origin: bottom right;
-  transform: rotate(calc(45deg * var(--i)));
-  clip-path: polygon(0 0, 56% 0, 100% 100%, 0 56%);
+  transform: rotate(calc(72deg * var(--i)));
+  clip-path: polygon(0 0, 80% 0, 100% 100%, 0 80%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -110,9 +123,8 @@ const formatQuestionType = (questionType) => {
 .container .wheel .option span {
   position: relative;
   transform: rotate(45deg);
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: #fff;
+  font-size: 1rem;
+  color: #000;
   user-select: none;
 }
 </style>
