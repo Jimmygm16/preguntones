@@ -28,14 +28,15 @@ const onQuestionAnswered = () => {
 
 const isCorrectAnswer = (index) => {
   const isCorrectAnswer = index === questionAnswers.value.indexOf(props.question.correct_answer)
-
-  if (isCorrectAnswer) {
-    emit('emitHandleAnswer', true)
-  } else {
-    emit('emitHandleAnswer', false)
-  }
-
-  return
+  answered.value = true
+  setTimeout(() => {
+    if (isCorrectAnswer) {
+      emit('emitHandleAnswer', true)
+    } else {
+      emit('emitHandleAnswer', false)
+    }
+  }, 1500)
+  return isCorrectAnswer
 }
 </script>
 
