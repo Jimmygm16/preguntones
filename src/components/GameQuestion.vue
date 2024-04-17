@@ -8,7 +8,8 @@ const props = defineProps({
     required: true
   }
 })
-console.log(props.question)
+
+const emit = defineEmits(['emitHandleAnswer'])
 
 // Full set of answers
 const questionAnswers = ref([])
@@ -26,7 +27,15 @@ const onQuestionAnswered = () => {
 }
 
 const isCorrectAnswer = (index) => {
-  return index === questionAnswers.value.indexOf(props.question.correct_answer)
+  const isCorrectAnswer = index === questionAnswers.value.indexOf(props.question.correct_answer)
+
+  if (isCorrectAnswer) {
+    emit('emitHandleAnswer', true)
+  } else {
+    emit('emitHandleAnswer', false)
+  }
+
+  return
 }
 </script>
 
@@ -101,11 +110,7 @@ const isCorrectAnswer = (index) => {
   border-radius: 10px;
   width: 65dvw;
   padding: 1rem;
-  position: absolute;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 
   .question-title {
     position: relative;

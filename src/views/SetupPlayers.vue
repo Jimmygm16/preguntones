@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { RouterLink, useRoute, useRouter } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 
 const router = useRouter()
 const character1 = ref('')
@@ -26,11 +26,15 @@ const send_characters = () => {
     const charactersInfo = [
       {
         character1: character1.value,
-        url_img1: img1.value
+        url_img1: img1.value,
+        lives: 3,
+        score: 0
       },
       {
         character2: character2.value,
-        url_img2: img2.value
+        url_img2: img2.value,
+        lives: 3,
+        score: 0
       }
     ]
     localStorage.setItem('characters', JSON.stringify(charactersInfo))
