@@ -1,22 +1,24 @@
 <script setup>
-const props = defineProps({
-  show: Boolean,
-  result: Object
-})
+import { ref } from 'vue'
+
+const info = ref(JSON.parse(localStorage.getItem('characters')))
+console.log(info.value[0].url_img1)
 </script>
 
 <template>
   <div class="result-container">
     <div class="player-info">
-      <span class="text"> Player 1 </span>
-      <span class="text"> 1300 ptos </span>
+      <span class="text"> {{ info[0].character1 }}</span>
+      <span class="text"> {{ info[0].score + ' ptos' }} </span>
     </div>
     <div class="player-info">
-      <span class="text"> Player 2 </span>
-      <span class="text"> 1600 ptos </span>
+      <span class="text"> {{ info[1].character2 }} </span>
+      <span class="text"> {{ info[1].score + ' ptos' }} </span>
     </div>
     <div class="result">
-      <span class="text">Player 2 wins!</span>
+      <span class="text">{{
+        info[0].score > info[1].score ? info[0].character1 + ' wins' : info[1].character2 + ' wins'
+      }}</span>
     </div>
   </div>
 </template>

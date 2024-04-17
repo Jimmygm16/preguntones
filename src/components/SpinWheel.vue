@@ -24,7 +24,7 @@ const formatQuestionType = (questionType) => {
 
 setTimeout(() => {
   props.updateSelectedCategory(selectedCategory.value, 1)
-}, 5000)
+}, 7000)
 </script>
 
 <template>
