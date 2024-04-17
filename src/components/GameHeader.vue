@@ -1,8 +1,10 @@
 <script setup>
-import { ref } from 'vue'
-
-const info = ref(JSON.parse(localStorage.getItem('characters')))
-console.log(info.value[0].url_img1)
+const props = defineProps({
+  info: {
+    type: Array,
+    required: true
+  }
+})
 </script>
 
 <template>
@@ -10,13 +12,18 @@ console.log(info.value[0].url_img1)
     <div class="character-info">
       <img class="avatar" :src="info[0].url_img1" alt="character1" />
       <div class="hearts-container">
-        <img class="heart" src="../assets/imgs/hearth.svg" alt="heart" :fill="'#FF0000'" />
-        <img class="heart" src="../assets/imgs/hearth.svg" alt="heart" :fill="'#FF0000'" />
-        <img class="heart" src="../assets/imgs/hearth.svg" alt="heart" :fill="'#FF0000'" />
+        <img
+          v-for="i in info[0].lives"
+          v-bind:key="i"
+          class="heart"
+          src="../assets/imgs/hearth.svg"
+          alt="heart"
+          :fill="'#FF0000'"
+        />
       </div>
       <div class="game-info">
         <span>{{ info[0].character1 }}</span>
-        <span>Puntos 10</span>
+        <span>Score: {{ info[0].score }}</span>
       </div>
     </div>
 
@@ -27,13 +34,18 @@ console.log(info.value[0].url_img1)
     <div class="character-info">
       <img class="avatar" :src="info[1].url_img2" alt="character1" />
       <div class="hearts-container">
-        <img class="heart" src="../assets/imgs/hearth.svg" alt="heart" :fill="'#FF0000'" />
-        <img class="heart" src="../assets/imgs/hearth.svg" alt="heart" :fill="'#FF0000'" />
-        <img class="heart" src="../assets/imgs/hearth.svg" alt="heart" :fill="'#FF0000'" />
+        <img
+          v-for="i in info[1].lives"
+          v-bind:key="i"
+          class="heart"
+          src="../assets/imgs/hearth.svg"
+          alt="heart"
+          :fill="'#FF0000'"
+        />
       </div>
       <div class="game-info">
         <span>{{ info[1].character2 }}</span>
-        <span>Puntos 10</span>
+        <span>Score: {{ info[1].score }}</span>
       </div>
     </div>
   </div>
