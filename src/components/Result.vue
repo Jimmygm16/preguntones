@@ -20,6 +20,12 @@ winner()
 
 <template>
   <div class="result-container">
+    <audio controls autoplay hidden>
+      <source
+        src="../assets/audio/Y2meta.app - Plan B - Te Dijeron (La Formula) [Official Audio] (128 kbps) (1).mp3"
+        type="audio/mp3"
+      />
+    </audio>
     <div class="player-info">
       <span class="text"> {{ info[0].character1 }}</span>
       <span class="text"> {{ info[0].score + ' points' }} </span>
