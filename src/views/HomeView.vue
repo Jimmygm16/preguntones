@@ -1,14 +1,20 @@
-<script setup></script>
+<script setup>
+import { RouterLink } from 'vue-router'
+</script>
 
 <template>
   <main class="main-content">
     <div class="title-container">
-      <span class="title">Preguntones</span>
+      <span class="title">Questioners</span>
     </div>
     <div class="menu">
       <div class="card">Individual</div>
-      <div class="card">Cooperativo local</div>
-      <div class="card">Configuración</div>
+      <RouterLink to="/players">
+        <div class="card">Local Coop</div>
+      </RouterLink>
+      <RouterLink to="/settings">
+        <div class="card">Configuration</div>
+      </RouterLink>
     </div>
   </main>
 </template>
@@ -51,8 +57,9 @@
 .card {
   display: flex;
   border: solid 0.1rem white;
-  padding: 1rem 6rem;
+  padding: 1rem;
   justify-content: center;
+  width: 20rem;
   background-color: wheat;
   box-shadow: 0.1rem 0.1rem 0.1rem 0.1rem rgb(0, 0, 0, 0.4);
 }
