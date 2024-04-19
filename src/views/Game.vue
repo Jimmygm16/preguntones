@@ -95,6 +95,9 @@ setTimeout(() => {
 <template>
   <LoadingSpinner v-if="loading" />
   <section v-else>
+    <audio controls autoplay hidden loop>
+      <source src="../assets/audio/creepy-devil-dance-166764.mp3" type="audio/mp3" />
+    </audio>
     <GameHeader :info="playersInfo" />
     <main class="page-content">
       <div class="stage-1" v-if="stages[0]">
