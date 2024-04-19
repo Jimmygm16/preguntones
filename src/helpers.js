@@ -14,7 +14,10 @@ const getRandomCategories = (questions) => {
 
   for (let i = 0; i < 5; i++) {
     const randomIndex = Math.floor(Math.random() * questionCategories.length)
-    if(hasSameName(categories, questionCategories[randomIndex])) {
+    const categoryQuestions = questions.filter((question) => {
+      return question.category === questionCategories[randomIndex]
+    })
+    if(hasSameName(categories, questionCategories[randomIndex]) || categoryQuestions.length <= 2) {
       i--
       continue
     }
@@ -42,7 +45,8 @@ const getRandomQuestion = (questions, selectedCategory) => {
   const randomIndex = Math.floor(Math.random() * categoryQuestions.length)
   const randomQuestion = categoryQuestions[randomIndex]
 
-  questions.splice(randomIndex, 1)
+  const originalQuestionIndex = questions.indexOf(randomQuestion)
+  questions.splice(originalQuestionIndex, 1)
   return randomQuestion
 }
 
