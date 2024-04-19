@@ -30,7 +30,6 @@ const updateSelectedCategory = (category, endedStage) => {
 }
 
 const handleStages = (stage) => {
-  console.log(rounds.value)
   stages.value = [false, false, false]
   if (stage === 3 && rounds.value > 0) {
     rounds.value -= 1
@@ -42,10 +41,9 @@ const handleStages = (stage) => {
   }
 
   if (stage === 1) {
+    question.value = getRandomQuestion(apiQuestions.value, selectedCategory.value)
     setTimeout(() => {
-      question.value = getRandomQuestion(apiQuestions.value, selectedCategory.value)
       stages.value[stage] = true
-      console.log(apiQuestions.value.length)
     }, 2000)
   } else if (stage === 2) {
     answerRotation.value = answerRotation.value === 1 ? 0 : 1
@@ -106,7 +104,7 @@ setTimeout(() => {
         />
       </div>
       <div class="question-content" v-if="stages[1]">
-        <Timer :time="10" @emitCountDownIsOver="CountDownIsOver" />
+        <Timer :time="20" @emitCountDownIsOver="CountDownIsOver" />
         <GameQuestion :question="question" @emitHandleAnswer="handleAnswer" />
       </div>
       <div v-if="!stages[0] && !stages[1] && !stages[2]">

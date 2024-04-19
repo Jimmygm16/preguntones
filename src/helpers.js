@@ -1,7 +1,8 @@
 const getAnswersAarray = (wrongAnswers, correctAnswer) => {
   const answers = wrongAnswers
   answers.push(correctAnswer)
-  return answers.sort(() => Math.random() - 0.5)
+  answers.sort(() => Math.random() - 0.5)
+  return answers
 }
 
 const getRandomCategories = (questions) => {
@@ -35,6 +36,8 @@ const getRandomQuestion = (questions, selectedCategory) => {
   const categoryQuestions = questions.filter((question) => {
     return question.category === selectedCategory
   })
+
+  console.log(categoryQuestions.length)
 
   const randomIndex = Math.floor(Math.random() * categoryQuestions.length)
   const randomQuestion = categoryQuestions[randomIndex]

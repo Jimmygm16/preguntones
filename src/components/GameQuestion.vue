@@ -12,13 +12,10 @@ const props = defineProps({
 const emit = defineEmits(['emitHandleAnswer'])
 
 // Full set of answers
-const questionAnswers = ref([])
+const questionAnswers = ref(new Set(props.question.incorrect_answers))
+questionAnswers.value.add(props.question.correct_answer)
+const answersArray = Array.from(questionAnswers.value).sort(() => Math.random() - 0.5)
 const answered = ref(false)
-
-questionAnswers.value = getAnswersAarray(
-  props.question.incorrect_answers,
-  props.question.correct_answer
-)
 
 const isMultipleChoice = props.question.type === 'multiple'
 
@@ -35,15 +32,14 @@ const onQuestionAnswered = (index) => {
 }
 
 const isCorrectAnswer = (index) => {
-  const isCorrectAnswer = index === questionAnswers.value.indexOf(props.question.correct_answer)
-  console.log(isCorrectAnswer, props.question.correct_answer, questionAnswers.value[index])
+  const isCorrectAnswer = index === answersArray.indexOf(props.question.correct_answer)
   answered.value = true
   return isCorrectAnswer
 }
 
 setTimeout(() => {
-  isCorrectAnswer(-1)
-}, 10000)
+  onQuestionAnswered(-1)
+}, 20000)
 </script>
 
 <template>
@@ -54,7 +50,7 @@ setTimeout(() => {
     <ul class="questions-answers" v-if="!answered">
       <li
         class="answer"
-        v-for="(answer, index) in questionAnswers"
+        v-for="(answer, index) in answersArray"
         v-bind:key="index"
         @click="onQuestionAnswered(index)"
       >
@@ -66,7 +62,7 @@ setTimeout(() => {
     <ul class="questions-answers" v-else>
       <li
         class="answered"
-        v-for="(answer, index) in questionAnswers"
+        v-for="(answer, index) in answersArray"
         v-bind:key="index"
         :style="{
           backgroundColor: isCorrectAnswer(index) ? 'rgba(0,255,0,0.3)' : 'rgba(255,0,0,0.3)'
@@ -85,7 +81,7 @@ setTimeout(() => {
     <div class="boolean-questions" v-if="!answered">
       <div
         class="bool-answer"
-        v-for="(answer, index) in questionAnswers"
+        v-for="(answer, index) in answersArray"
         v-bind:key="index"
         @click="onQuestionAnswered(index)"
       >
@@ -97,7 +93,7 @@ setTimeout(() => {
     <div class="boolean-questions" v-else>
       <div
         class="bool-answered"
-        v-for="(answer, index) in questionAnswers"
+        v-for="(answer, index) in answersArray"
         v-bind:key="index"
         :style="{
           backgroundColor: isCorrectAnswer(index) ? 'rgba(0,255,0,0.3)' : 'rgba(255,0,0,0.3)'

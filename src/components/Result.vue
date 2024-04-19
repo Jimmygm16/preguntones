@@ -22,11 +22,11 @@ winner()
   <div class="result-container">
     <div class="player-info">
       <span class="text"> {{ info[0].character1 }}</span>
-      <span class="text"> {{ info[0].score + ' ptos' }} </span>
+      <span class="text"> {{ info[0].score + ' points' }} </span>
     </div>
     <div class="player-info">
       <span class="text"> {{ info[1].character2 }} </span>
-      <span class="text"> {{ info[1].score + ' ptos' }} </span>
+      <span class="text"> {{ info[1].score + ' points' }} </span>
     </div>
     <div class="result">
       <span class="text">{{ result }}</span>
